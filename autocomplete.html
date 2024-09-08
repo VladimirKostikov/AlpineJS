@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlpineJS Autocomplete</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #ddd;
+            border-top: none;
+            background-color: #fff;
+            z-index: 99;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .autocomplete-item:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div x-data="autocompleteApp()" class="p-4 autocomplete">
+        <input x-model="query" @input="search()" type="text" class="border p-2 rounded" placeholder="Search...">
+        <div x-show="filteredResults.length > 0" class="autocomplete-items">
+            <template x-for="(result, index) in filteredResults" :key="index">
+                <div @click="selectItem(result)" class="autocomplete-item">
+                    <span x-text="result"></span>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <script>
+        function autocompleteApp() {
+            return {
+                query: '',
+                results: [
+                    'Apple', 'Banana', 'Blueberry', 'Cherry', 'Grape', 'Lemon', 'Orange', 'Peach', 'Pear', 'Pineapple'
+                ],
+                filteredResults: [],
+                search() {
+                    const queryLower = this.query.toLowerCase();
+                    this.filteredResults = this.results.filter(item =>
+                        item.toLowerCase().includes(queryLower)
+                    );
+                },
+                selectItem(item) {
+                    this.query = item;
+                    this.filteredResults = [];
+                }
+            }
+        }
+    </script>
+</body>
+</html>

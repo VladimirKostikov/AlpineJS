@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlpineJS Todo List</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .todo-item button {
+            margin-left: auto;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .todo-item button:hover {
+            background-color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <div x-data="todoApp()" class="p-4">
+ 
+        <div class="mb-4">
+            <input x-model="newTask" type="text" class="border p-2 rounded" placeholder="Add a new task...">
+            <button @click="addTask()" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Add Task</button>
+        </div>
+
+
+        <div x-show="tasks.length > 0">
+            <template x-for="(task, index) in tasks" :key="index">
+                <div class="todo-item">
+                    <input type="checkbox" x-model="task.completed">
+                    <span x-bind:class="{ 'line-through': task.completed }" x-text="task.text"></span>
+                    <button @click="removeTask(index)">Delete</button>
+                </div>
+            </template>
+        </div>
+        <div x-show="tasks.length === 0" class="text-gray-500">
+            No tasks available.
+        </div>
+    </div>
+
+    <script>
+        function todoApp() {
+            return {
+                newTask: '',
+                tasks: [],
+                addTask() {
+                    if (this.newTask.trim() !== '') {
+                        this.tasks.push({ text: this.newTask, completed: false });
+                        this.newTask = '';
+                    }
+                },
+                removeTask(index) {
+                    this.tasks.splice(index, 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
