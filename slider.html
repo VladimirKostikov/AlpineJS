@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlpineJS Image Slider</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        .slider {
+            position: relative;
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slide img {
+            width: 100%;
+            display: block;
+        }
+        .button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div x-data="slider()" class="slider">
+ 
+        <div class="slides" :style="`transform: translateX(-${currentSlide * 100}%)`">
+            <template x-for="(image, index) in images" :key="index">
+                <div class="slide">
+                    <img :src="image" :alt="'Slide ' + (index + 1)">
+                </div>
+            </template>
+        </div>
+     
+        <button @click="prevSlide()" class="button prev">❮</button>
+
+        <button @click="nextSlide()" class="button next">❯</button>
+    </div>
+
+    <script>
+        function slider() {
+            return {
+                currentSlide: 0,
+                images: [
+                    'https://via.placeholder.com/600x400?text=Slide+1',
+                    'https://via.placeholder.com/600x400?text=Slide+2',
+                    'https://via.placeholder.com/600x400?text=Slide+3'
+                ],
+                nextSlide() {
+                    this.currentSlide = (this.currentSlide + 1) % this.images.length;
+                },
+                prevSlide() {
+                    this.currentSlide = (this.currentSlide - 1 + this.images.length) % this.images.length;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

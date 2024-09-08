@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlpineJS Notes</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        .note {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .note button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .note button:hover {
+            background-color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <div x-data="notesApp()" class="p-4">
+        
+        <div class="mb-4">
+            <input x-model="newNote" type="text" class="border p-2 rounded" placeholder="Add a new note...">
+            <button @click="addNote()" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Add</button>
+        </div>
+
+        
+        <template x-for="(note, index) in notes" :key="index">
+            <div class="note">
+               
+                <input x-model="note.text" type="text" class="border p-2 rounded w-full">
+                <button @click="removeNote(index)">Delete</button>
+            </div>
+        </template>
+    </div>
+
+    <script>
+        function notesApp() {
+            return {
+                newNote: '',
+                notes: [],
+                addNote() {
+                    if (this.newNote.trim() !== '') {
+                        this.notes.push({ text: this.newNote });
+                        this.newNote = '';
+                    }
+                },
+                removeNote(index) {
+                    this.notes.splice(index, 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
