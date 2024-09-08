@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlpineJS Tabs Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        .active-tab {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin-top: -1px;
+        }
+    </style>
+</head>
+<body>
+    <div x-data="{ activeTab: 1 }" class="p-4">
+        <div class="flex space-x-4">
+            <div 
+                @click="activeTab = 1" 
+                :class="{'active-tab': activeTab === 1}" 
+                class="tab">
+                Tab 1
+            </div>
+            <div 
+                @click="activeTab = 2" 
+                :class="{'active-tab': activeTab === 2}" 
+                class="tab">
+                Tab 2
+            </div>
+            <div 
+                @click="activeTab = 3" 
+                :class="{'active-tab': activeTab === 3}" 
+                class="tab">
+                Tab 3
+            </div>
+        </div>
+
+    
+        <div x-show="activeTab === 1" class="tab-content">
+            <p>Content 1.</p>
+        </div>
+        <div x-show="activeTab === 2" class="tab-content">
+            <p>Content 2.</p>
+        </div>
+        <div x-show="activeTab === 3" class="tab-content">
+            <p>Content 3.</p>
+        </div>
+    </div>
+</body>
+</html>
