@@ -1,4 +1,4 @@
-# ![AlpineJS Logo](https://raw.githubusercontent.com/alpinejs/alpine/HEAD/.github/assets/logo.svg)
+# ![AlpineJS Logo](https://alpinejs.dev/alpine_long.svg)
 
 # AlpineJS
 
